@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">HelloAndroid</string>
+    <string name="show_name_btn_text">Show name</string>
+    <string name="name_input_placeholder">Whats your name?</string>
+    <string name="empty_name_msg">No name is input</string>
+    <string name="show_info_btn_text">Show info</string>
+    <string name="app_info_msg">App info here</string>
+    <string name="change_color_btn_text">Color</string>
+    <string name="go_detail_screen_btn_text">Go details</string>
 </resources>
