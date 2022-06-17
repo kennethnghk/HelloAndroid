@@ -2,6 +2,7 @@ package im.tobe.helloandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.icu.text.NumberFormat;
@@ -15,20 +16,36 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import im.tobe.helloandroid.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
-    private Button showBtn;
-    private TextView nameTxt;
-    private EditText nameInput;
+    private ActivityMainBinding binding;
+
+    /**
+     * for no data-binding
+     */
+//    private Button showBtn;
+//    private TextView nameTxt;
+//    private EditText nameInput;
     private int salary = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        showBtn = findViewById(R.id.showNameBtn);
-        nameTxt = findViewById(R.id.nameTxt);
-        nameInput = findViewById(R.id.nameInput);
+        /**
+         * while no data-binding findViewById would be slow because the app searches the element
+         */
+//        setContentView(R.layout.activity_main);
+//        showBtn = findViewById(R.id.showNameBtn);
+//        nameTxt = findViewById(R.id.nameTxt);
+//        nameInput = findViewById(R.id.nameInput);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.showNameBtn.setOnClickListener(this::onShowNameBtnClicked);
+
+        // OR by lambda
+//        binding.showNameBtn.setOnClickListener(view -> onShowNameBtnClicked(view));
 
         /**
          * while not using lambda:
@@ -69,23 +86,27 @@ public class MainActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-        String name = nameInput.getText().toString();
+        String name = binding.nameInput.getText().toString();
+
         Log.d("MainActivity", "onClick: "+name);
         if (!name.isEmpty()) {
-            nameTxt.setText("Hello, "+name+", Salary is:"+String.valueOf(numberFormat.format(salary)));
+            binding.nameTxt.setText("Hello, "+name+", Salary is:"+String.valueOf(numberFormat.format(salary)));
         } else {
-            nameTxt.setText(R.string.empty_name_msg);
+            binding.nameTxt.setText(R.string.empty_name_msg);
         }
+
+        // clear all binding
+        binding.invalidateAll();
     }
 
     public void onShowInfoBtnClicked(View view) {
 //        Toast.makeText(MainActivity.this, R.string.app_info_msg, Toast.LENGTH_LONG).show();
 
-        Snackbar.make(nameTxt, R.string.app_info_msg, Snackbar.LENGTH_LONG).setAction("More", view1-> Log.d("Snack", "here")).show();
+        Snackbar.make(binding.nameTxt, R.string.app_info_msg, Snackbar.LENGTH_LONG).setAction("More", view1-> Log.d("Snack", "here")).show();
     }
 
     public void onChangeColorBtnClicked(View view) {
-        nameTxt.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.white));
+        binding.nameTxt.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.white));
         /**
          * getColor may be deprecated
          */
