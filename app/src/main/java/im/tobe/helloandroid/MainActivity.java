@@ -16,10 +16,12 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import im.tobe.helloandroid.data.Bio;
 import im.tobe.helloandroid.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    private Bio bio = new Bio();
 
     /**
      * for no data-binding
@@ -41,11 +43,21 @@ public class MainActivity extends AppCompatActivity {
 //        nameTxt = findViewById(R.id.nameTxt);
 //        nameInput = findViewById(R.id.nameInput);
 
+        /**
+         * binding view
+         */
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.showNameBtn.setOnClickListener(this::onShowNameBtnClicked);
 
         // OR by lambda
 //        binding.showNameBtn.setOnClickListener(view -> onShowNameBtnClicked(view));
+
+        /**
+         * binding data Bio
+         */
+        bio.setName("Nakata");
+        binding.setBio(bio);
+
 
         /**
          * while not using lambda:
@@ -94,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             binding.nameTxt.setText(R.string.empty_name_msg);
         }
+
+        bio.setName("Whyhaha");
 
         // clear all binding
         binding.invalidateAll();
