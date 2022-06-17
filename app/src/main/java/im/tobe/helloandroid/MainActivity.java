@@ -3,10 +3,12 @@ package im.tobe.helloandroid;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -61,8 +63,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onShowNameBtnClicked(View view) {
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
+        // hide keyboard
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
         String name = nameInput.getText().toString();
         Log.d("MainActivity", "onClick: "+name);
         if (!name.isEmpty()) {
@@ -87,6 +93,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onGoDetailPageBtnClicked(View view) {
-        setContentView(R.layout.detail);
+        setContentView(R.layout.linear_view);
     }
 }

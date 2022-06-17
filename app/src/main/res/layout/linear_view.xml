@@ -23,7 +23,21 @@
         android:text="TextView" />
 
     <ImageView
-        android:id="@+id/imageView"
-        tools:srcCompat="@tools:sample/avatars[2]"
-        style="@style/center_style" />
+        android:id="@+id/avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="this is the content description"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/scrollview_text_style"
+            android:text="@string/bio_text" />
+    </ScrollView>
+
 </androidx.appcompat.widget.LinearLayoutCompat>
